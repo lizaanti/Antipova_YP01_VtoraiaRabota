@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище RepairRequestsDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Position" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RepairRequests">
+          <Key>
+            <PropertyRef Name="RequestID" />
+          </Key>
+          <Property Name="RequestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RequestDate" Type="datetime" Nullable="false" />
+          <Property Name="EquipmentName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="FaultType" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ClientName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AssignedEmployee" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="RequestComments">
+          <Key>
+            <PropertyRef Name="CommentID" />
+          </Key>
+          <Property Name="CommentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RequestID" Type="int" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="CommentText" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CommentDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__RequestCo__Emplo__3C69FB99">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RequestComments" Type="Self.RequestComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="RequestComments">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RequestCo__Reque__3B75D760">
+          <End Role="RepairRequests" Type="Self.RepairRequests" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RequestComments" Type="Self.RequestComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RepairRequests">
+              <PropertyRef Name="RequestID" />
+            </Principal>
+            <Dependent Role="RequestComments">
+              <PropertyRef Name="RequestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище RepairRequestsDBModelContainer">
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RepairRequests" EntityType="Self.RepairRequests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestComments" EntityType="Self.RequestComments" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__RequestCo__Emplo__3C69FB99" Association="Self.FK__RequestCo__Emplo__3C69FB99">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="RequestComments" EntitySet="RequestComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RequestCo__Reque__3B75D760" Association="Self.FK__RequestCo__Reque__3B75D760">
+            <End Role="RepairRequests" EntitySet="RepairRequests" />
+            <End Role="RequestComments" EntitySet="RequestComments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RepairRequestsDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Position" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="RequestComments" Relationship="Self.FK__RequestCo__Emplo__3C69FB99" FromRole="Employees" ToRole="RequestComments" />
+        </EntityType>
+        <EntityType Name="RepairRequests">
+          <Key>
+            <PropertyRef Name="RequestID" />
+          </Key>
+          <Property Name="RequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EquipmentName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FaultType" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClientName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AssignedEmployee" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="RequestComments" Relationship="Self.FK__RequestCo__Reque__3B75D760" FromRole="RepairRequests" ToRole="RequestComments" />
+        </EntityType>
+        <EntityType Name="RequestComments">
+          <Key>
+            <PropertyRef Name="CommentID" />
+          </Key>
+          <Property Name="CommentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestID" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="CommentText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CommentDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK__RequestCo__Emplo__3C69FB99" FromRole="RequestComments" ToRole="Employees" />
+          <NavigationProperty Name="RepairRequests" Relationship="Self.FK__RequestCo__Reque__3B75D760" FromRole="RequestComments" ToRole="RepairRequests" />
+        </EntityType>
+        <Association Name="FK__RequestCo__Emplo__3C69FB99">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RequestComments" Type="Self.RequestComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="RequestComments">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RequestCo__Reque__3B75D760">
+          <End Role="RepairRequests" Type="Self.RepairRequests" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RequestComments" Type="Self.RequestComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RepairRequests">
+              <PropertyRef Name="RequestID" />
+            </Principal>
+            <Dependent Role="RequestComments">
+              <PropertyRef Name="RequestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RepairRequestsDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employees" EntityType="Self.Employees" />
+          <EntitySet Name="RepairRequests" EntityType="Self.RepairRequests" />
+          <EntitySet Name="RequestComments" EntityType="Self.RequestComments" />
+          <AssociationSet Name="FK__RequestCo__Emplo__3C69FB99" Association="Self.FK__RequestCo__Emplo__3C69FB99">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="RequestComments" EntitySet="RequestComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RequestCo__Reque__3B75D760" Association="Self.FK__RequestCo__Reque__3B75D760">
+            <End Role="RepairRequests" EntitySet="RepairRequests" />
+            <End Role="RequestComments" EntitySet="RequestComments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище RepairRequestsDBModelContainer" CdmEntityContainer="RepairRequestsDBEntities">
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="RepairRequestsDBModel.Employees">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RepairRequests">
+            <EntityTypeMapping TypeName="RepairRequestsDBModel.RepairRequests">
+              <MappingFragment StoreEntitySet="RepairRequests">
+                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="EquipmentName" ColumnName="EquipmentName" />
+                <ScalarProperty Name="FaultType" ColumnName="FaultType" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="AssignedEmployee" ColumnName="AssignedEmployee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestComments">
+            <EntityTypeMapping TypeName="RepairRequestsDBModel.RequestComments">
+              <MappingFragment StoreEntitySet="RequestComments">
+                <ScalarProperty Name="CommentID" ColumnName="CommentID" />
+                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="CommentText" ColumnName="CommentText" />
+                <ScalarProperty Name="CommentDate" ColumnName="CommentDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

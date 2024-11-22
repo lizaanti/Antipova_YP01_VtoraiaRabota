@@ -1,0 +1,36 @@
+﻿<Window x:Class="RepairRequest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RepairRequest"
+        mc:Ignorable="d"
+              Title="Учет заявок на ремонт" Height="450" Width="800"
+        Background="#FFFFFF">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush>
+                <GradientStop Color="#FFFFFF" Offset="0" />
+                <GradientStop Color="#D2F1F0" Offset="1" />
+            </LinearGradientBrush>
+        </Grid.Background>
+
+
+
+        <DataGrid x:Name="RequestsDataGrid" HorizontalAlignment="Left" VerticalAlignment="Top" Height="300" Width="750" Margin="20,20,0,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Дата" Binding="{Binding RequestDate}" Width="50"/>
+                <DataGridTextColumn Header="Оборудование" Binding="{Binding EquipmentName}" Width="70"/>
+                <DataGridTextColumn Header="Тип неисправности" Binding="{Binding FaultType}" Width="80"/>
+                <DataGridTextColumn Header="Описание" Binding="{Binding Description}" Width="200"/>
+                <DataGridTextColumn Header="Клиент" Binding="{Binding ClientName}" Width="50"/>
+                <DataGridTextColumn Header="Статус заявки" Binding="{Binding Status}" Width="50"/>
+                <DataGridTextColumn Header="Ответственный" Binding="{Binding AssignedEmployee}" Width="50"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Редактировать" Width="150" Height="40" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="180,0,0,20" Background="#5EC6CD" Click="EditRequest_Click" />
+        <Button Content="Добавить заявку" Width="150" Height="40" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20,0,0,20" Background="#5EC6CD" Click="AddRequest_Click" />
+        <Button Content="Удалить" Width="150" Height="40" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="340,0,0,20" Background="#5EC6CD" Click="DeleteRequest_Click" />
+        <Button Content="Отчет" Width="150" Height="40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,20,20" Background="#5EC6CD" Click="Report_Click"/>
+    </Grid>
+</Window>
